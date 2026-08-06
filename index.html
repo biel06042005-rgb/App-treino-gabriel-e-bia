@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Treino — Dr. Rafael Andrade</title>
+<meta name="description" content="App de treino personalizado — Gabriel & Beatriz">
+<meta name="theme-color" content="#111827">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Treino PT">
+<link rel="icon" href="icon-192.png">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== TELA: SELEÇÃO DE PERFIL ===================== -->
+  <section id="screen-profile" class="screen">
+    <div class="profile-hero">
+      <div class="logo-badge">💪</div>
+      <h1>Dr. Rafael Andrade</h1>
+      <p class="subtitle">Personal Trainer</p>
+    </div>
+    <p class="profile-prompt">Quem vai treinar hoje?</p>
+    <div class="profile-choices">
+      <button class="profile-card" data-profile="gabriel" style="--accent:#2563eb">
+        <span class="profile-avatar">G</span>
+        <span class="profile-name">Gabriel</span>
+        <span class="profile-goal">Hipertrofia + perda de gordura</span>
+      </button>
+      <button class="profile-card" data-profile="beatriz" style="--accent:#db2777">
+        <span class="profile-avatar">B</span>
+        <span class="profile-name">Beatriz</span>
+        <span class="profile-goal">Emagrecimento + glúteo/coxa</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================== TELA: SEMANA ===================== -->
+  <section id="screen-week" class="screen hidden">
+    <header class="topbar">
+      <button id="btn-switch-profile" class="icon-btn" aria-label="Trocar perfil">⇄</button>
+      <div class="topbar-title">
+        <span id="week-profile-avatar" class="mini-avatar"></span>
+        <span id="week-profile-name"></span>
+      </div>
+      <button id="btn-phase" class="icon-btn phase-btn" aria-label="Fase do treino">⚙︎</button>
+    </header>
+
+    <div id="phase-banner" class="phase-banner">
+      <span id="phase-label"></span>
+      <button id="phase-toggle" class="phase-toggle-btn"></button>
+    </div>
+
+    <h2 class="section-title">Sua semana</h2>
+    <div id="week-list" class="week-list"></div>
+
+    <div class="install-hint" id="install-hint">
+      <p>📲 Instale este app na tela inicial do seu celular para acesso rápido — toque em <strong>“Como instalar”</strong>.</p>
+      <button id="btn-install-help" class="link-btn">Como instalar</button>
+    </div>
+  </section>
+
+  <!-- ===================== TELA: DIA DE TREINO ===================== -->
+  <section id="screen-day" class="screen hidden">
+    <header class="topbar">
+      <button id="btn-back-week" class="icon-btn" aria-label="Voltar">←</button>
+      <div class="topbar-title">
+        <span id="day-title"></span>
+      </div>
+      <span></span>
+    </header>
+    <p id="day-subtitle" class="day-subtitle"></p>
+    <p id="day-nota" class="day-nota hidden"></p>
+
+    <div id="exercise-list" class="exercise-list"></div>
+
+    <p id="day-finalizador" class="finalizador hidden"></p>
+
+    <div class="day-actions">
+      <button id="btn-reset-day" class="secondary-btn">Reiniciar marcações desta semana</button>
+    </div>
+  </section>
+
+  <!-- ===================== TELA: DESCANSO ===================== -->
+  <section id="screen-rest" class="screen hidden">
+    <header class="topbar">
+      <button id="btn-back-week-rest" class="icon-btn" aria-label="Voltar">←</button>
+      <div class="topbar-title"><span>Descanso ativo</span></div>
+      <span></span>
+    </header>
+    <div class="rest-content">
+      <div class="rest-icon">🧘</div>
+      <h2>Hoje é dia de recuperar</h2>
+      <p>Caminhada leve de 30-40 minutos + alongamento/mobilidade. Sem musculação hoje — é assim que o corpo absorve o treino da semana e cresce.</p>
+      <p class="rest-tip">Se estiver com fadiga por causa da aplicação de terça, aproveite para descansar de verdade.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===================== MODAL: VÍDEO DO EXERCÍCIO ===================== -->
+<div id="video-modal" class="modal hidden">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button id="video-modal-close" class="modal-close" aria-label="Fechar">✕</button>
+    <div id="video-embed-wrap" class="video-embed-wrap"></div>
+    <p id="video-caption" class="video-caption"></p>
+  </div>
+</div>
+
+<!-- ===================== MODAL: INSTALAR ===================== -->
+<div id="install-modal" class="modal hidden">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button id="install-modal-close" class="modal-close" aria-label="Fechar">✕</button>
+    <h2>Como instalar na tela inicial</h2>
+    <div class="install-block">
+      <h3>📱 iPhone (Safari)</h3>
+      <ol>
+        <li>Abra este link no navegador <strong>Safari</strong>.</li>
+        <li>Toque no botão <strong>Compartilhar</strong> (o quadrado com a seta para cima).</li>
+        <li>Escolha <strong>"Adicionar à Tela de Início"</strong>.</li>
+        <li>Toque em <strong>"Adicionar"</strong> — pronto, o ícone aparece na tela inicial.</li>
+      </ol>
+    </div>
+    <div class="install-block">
+      <h3>🤖 Android (Chrome)</h3>
+      <ol>
+        <li>Abra este link no navegador <strong>Chrome</strong>.</li>
+        <li>Toque no menu (três pontinhos) no canto superior direito.</li>
+        <li>Escolha <strong>"Instalar app"</strong> ou <strong>"Adicionar à tela inicial"</strong>.</li>
+        <li>Confirme — o app aparece com ícone próprio, como um app normal.</li>
+      </ol>
+    </div>
+    <p class="install-note">O app funciona 100% offline depois da primeira visita — inclusive as ilustrações de demonstração dos exercícios.</p>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
